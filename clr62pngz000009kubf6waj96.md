@@ -1,8 +1,8 @@
 ---
-title: "The 7 VSCode Extensions I Can’t Live Without"
+title: "7 VSCode Extensions To 10X Your Productivity"
 datePublished: Tue Jan 09 2024 08:12:02 GMT+0000 (Coordinated Universal Time)
 cuid: clr62pngz000009kubf6waj96
-slug: the-7-vscode-extensions-i-cant-live-without
+slug: 7-vscode-extensions-to-10x-your-productivity
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1704787884314/d259a60b-3054-488e-ac11-da4ec7862b55.jpeg
 tags: frontend-development, vscode-extensions, junior-frontend-developer
 
