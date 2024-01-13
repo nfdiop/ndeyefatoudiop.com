@@ -3,7 +3,7 @@ title: "5 Simple Pieces of Advice for Junior Developers to Get Unstuck Without L
 datePublished: Sat Jan 13 2024 23:27:36 GMT+0000 (Coordinated Universal Time)
 cuid: clrcp6hea000808la90mocnpv
 slug: 5-simple-pieces-of-advice-for-junior-developers-to-get-unstuck-without-looking-or-feeling-foolish
-cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1705188381924/63b130fe-bdaf-4653-a8c8-457bcc21c37c.jpeg
+cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1705189136968/ef2c8e92-d55d-4a16-a033-e6bf1be02393.jpeg
 tags: webdev, tips, career-advice, junior-developer
 
 ---
