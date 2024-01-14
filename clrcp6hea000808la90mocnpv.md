@@ -12,8 +12,6 @@ I have been practicing software development for +5 years.
 
 In the process, I've been stuck on problems, but I've also unblocked other developers.
 
-Admittedly, I've caused frustration for some senior devs 😫, while, on the flip side, I've been equally frustrated by some junior devs.
-
 Now, reflecting on my journey, these are the 5 pieces of advice I wish someone had shared with me to navigate those moments of being stuck more effectively 🧠.
 
 ## Advice #1: Limit the time spent on the problem
