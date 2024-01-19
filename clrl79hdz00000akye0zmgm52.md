@@ -3,7 +3,7 @@ title: "Why the Heck Do We Need Bundlers, Compilers, or Build Tools in Frontend 
 datePublished: Fri Jan 19 2024 22:15:58 GMT+0000 (Coordinated Universal Time)
 cuid: clrl79hdz00000akye0zmgm52
 slug: why-the-heck-do-we-need-bundlers-compilers-or-build-tools-in-frontend-development-unveiling-10-reasons-why-they-exist
-cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1705702531498/b7627016-83d3-4a58-b72e-91e7593f9184.jpeg
+cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1705702780937/41d81feb-9768-4774-904a-8a440642b06e.jpeg
 tags: webpack, beginners, frontend-development, bundler, vite
 
 ---
