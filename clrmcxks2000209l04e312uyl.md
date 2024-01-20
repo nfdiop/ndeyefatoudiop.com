@@ -12,9 +12,9 @@ Finding the best frontend framework is a **myth**.
 
 That's what I realized after **3+ years** of frontend development experience.
 
-If there were an ultimate one, new frameworks wouldn't pop in so often and we would all be using the same.
+If there were an ultimate one, new frameworks wouldn't pop in so often, and we would all be using the same.
 
-Instead, follow these rules this to pick one 👇:
+Instead, follow these rules to pick one 👇:
 
 ## How to pick a framework depending on your situation:
 
