@@ -40,11 +40,11 @@ Let's be real. We all have code that we wrote ages ago and never touched. Luckil
 
 ## Reason #7: You have some code that you want users to load conditionally
 
-Imagine this: you've got a hefty component, but not every user needs it. Think of exclusive features for premium users. Those who won't use these features don't have to load that code. Thankfully, some of these tools make it possible to load code dynamically, thanks to lazy-loading and code splitting.
+Imagine this: you've got a hefty component, but not every user needs it. Think of exclusive features for premium users. Those who won't use these features don't have to load that code. You can already do this with Vanilla JS but these tools make it handy thanks to lazy-loading and code splitting.
 
 ## Reason #8: You want to import non-JS assets inside your Javascript file
 
-Sadly, browsers won't let you import files like CSS files directly into your JavaScript. Fortunately, these tools come to the rescue. They allow you to define how to load specific files using loaders.
+Sadly, browsers won't let you import some files directly into your JavaScript. Fortunately, these tools come to the rescue. They allow you to define how to load specific files using loaders.
 
 ## Reason #9: You want to use great tools (e.g., Typescript) without the hassle of having to configure it
 
