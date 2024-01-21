@@ -44,7 +44,7 @@ Imagine this: you've got a hefty component, but not every user needs it. Think o
 
 ## Reason #8: You want to import non-JS assets inside your Javascript file
 
-Sadly, browsers won't let you import some files directly into your JavaScript. Fortunately, these tools come to the rescue. They allow you to define how to load specific files using loaders.
+Sadly, browsers won't let you import some types of files directly into your JavaScript. Fortunately, these tools come to the rescue. They allow you to define how to load specific files using loaders.
 
 ## Reason #9: You want to use great tools (e.g., Typescript) without the hassle of having to configure it
 
