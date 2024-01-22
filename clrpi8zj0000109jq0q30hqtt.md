@@ -45,4 +45,4 @@ Leave a comment 📩 to share a tip.
 
 And Don't forget to Drop a "💖🦄🔥".
 
-If you like articles like this, join my **FREE** newsletter, **[FrontendJoy](https://ndeyefatoudiop.substack.com/)**, or find me on [X/Twitter](https://twitter.com/_ndeyefatoudiop).
+If you like articles like this, join my **FREE** newsletter, **[FrontendJoy](%%[newsletter])**, or find me on [X/Twitter](https://twitter.com/_ndeyefatoudiop).
