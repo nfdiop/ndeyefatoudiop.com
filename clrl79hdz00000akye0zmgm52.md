@@ -62,4 +62,4 @@ Leave a comment 📩 if you use these tools for other reasons!
 
 And Don't forget to Drop a "💖🦄🔥".
 
-If you like articles like this, join my **FREE** newsletter, **[FrontendJoy](https://ndeyefatoudiop.substack.com/)**, or find me on [X/Twitter](https://twitter.com/_ndeyefatoudiop).
+If you like articles like this, join my **FREE** newsletter, **[FrontendJoy](https://frontendjoy.substack.com/)**, or find me on [X/Twitter](https://twitter.com/_ndeyefatoudiop).
