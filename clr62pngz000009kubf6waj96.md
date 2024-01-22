@@ -53,4 +53,4 @@ I love this extension. It helps you craft meaningful messages, making them easy 
 
 **Link**: https://marketplace.visualstudio.com/items?itemName=ChakrounAnas.turbo-console-log
 
-What about you? What are your favorite VSCode extensions? Share it with me on X/Twitter at [_ndeyefatoudiop](https://twitter.com/_ndeyefatoudiop)
+What about you? What are your favorite VSCode extensions? Share it with me on X/Twitter at [_ndeyefatoudiop](https://twitter.com/_ndeyefatoudiop) or [Substack](https://frontendjoy.substack.com/).
