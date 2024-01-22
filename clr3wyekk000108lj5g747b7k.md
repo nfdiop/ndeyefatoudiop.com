@@ -58,4 +58,4 @@ So, always ensure you work on **challenging and diverse projects** that broaden 
 
 Remember, we all make mistakes, and it's okay. I still ended up fine despite all of these 😅. Each misstep is a chance to learn and grow. If you've faced similar roadblocks, I'd love to hear your experiences and how you tackled them. 🚀
 
-If you want more tips like this, don't hesitate to join on X/Twitter at [\_ndeyefatoudiop](https://twitter.com/_ndeyefatoudiop)
+If you want more tips like this, don't hesitate to join on X/Twitter at [\_ndeyefatoudiop](https://twitter.com/_ndeyefatoudiop) or [Substack](https://frontendjoy.substack.com/).
