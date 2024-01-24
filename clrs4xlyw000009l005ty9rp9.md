@@ -1,8 +1,8 @@
 ---
-title: "The Best Piece Of Advice I Was Given About Coding Interviews As A Junior Developer Looking For Their First Job"
+title: "The Best Piece Of Advice I Was Given About Coding Interviews As A Junior Developer Looking For My First Job"
 datePublished: Wed Jan 24 2024 18:45:08 GMT+0000 (Coordinated Universal Time)
 cuid: clrs4xlyw000009l005ty9rp9
-slug: the-best-piece-of-advice-i-was-given-about-coding-interviews-as-a-junior-developer-looking-for-their-first-job
+slug: the-best-piece-of-advice-i-was-given-about-coding-interviews-as-a-junior-developer-looking-for-my-first-job
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1706121843868/4e0f563e-fe6d-4700-84ac-1de3432a6b2d.jpeg
 tags: interview, advice, beginners, leetcode
 
