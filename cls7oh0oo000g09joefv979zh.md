@@ -387,7 +387,7 @@ It's a rewarding experience and gives meaning to your journey.
 
 ![Small clothes](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/3bydv38x949087w4we5c.jpeg)
 
-Trying new learning resources (e.g., [Udemy](https://www.udemy.com/), [FreeCodeCamp](https://www.freecodecamp.org/), [The Odin Project](https://www.freecodecamp.org/),...) is like trying on clothes. Some resources will fit you well and flatter you, while others won't.
+Trying new learning resources (e.g., [Udemy](https://www.udemy.com/), [FreeCodeCamp](https://www.freecodecamp.org/), [The Odin Project](https://www.theodinproject.com/),...) is like trying on clothes. Some resources will fit you well and flatter you, while others won't.
 
 There's no one-size-fits-all resource. What works great for one person may not work for you. The key is to pick one that suits your learning style and your specific needs at the time.
 
