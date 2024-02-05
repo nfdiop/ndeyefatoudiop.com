@@ -1,8 +1,8 @@
 ---
-title: "How the "The Three Little Pigs" Story Helped Me Become A Senior Frontend Developer"
+title: "How the "The Three Little Pigs" Story Helped Me Become A Better Frontend Developer"
 datePublished: Mon Feb 05 2024 12:31:51 GMT+0000 (Coordinated Universal Time)
 cuid: cls8wvs8h000009jm12r16gno
-slug: how-the-the-three-little-pigs-story-helped-me-become-a-senior-frontend-developer
+slug: how-the-the-three-little-pigs-story-helped-me-become-a-better-frontend-developer
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1707136160039/0ffa8b72-1e17-426e-8fa8-e8e15ab13c0c.jpeg
 tags: mistakes, webdevelopment, beginners, 100daysofcode, stories
 
