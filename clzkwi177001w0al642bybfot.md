@@ -13,21 +13,24 @@ I have been working professionally with React for the past **+5 years**.
 
 In this article, I share the 101 best tips & tricks I learned over the years.
 
-
 Ready? Let's dive in 💪!
 
-> ℹ️ _Notes:_
-> - This guide assumes a basic familiarity with React and an understanding of the terms `props`, `state`, `context`, etc.
-> - I tried to use Vanilla JS for most of the examples to keep things simple. If you're using TypeScript, you can easily adapt the code.
-> - The code is not production-ready. Use at your own discretion.
+> ℹ️ *Notes:*
+> 
+> * This guide assumes a basic familiarity with React and an understanding of the terms `props`, `state`, `context`, etc.
+>     
+> * I tried to use Vanilla JS for most of the examples to keep things simple. If you're using TypeScript, you can easily adapt the code.
+>     
+> * The code is not production-ready. Use at your own discretion.
+>     
 
 ---
 
-##  Category #1: Components organization 🧹
+## Category #1: Components organization 🧹
 
 ---
 
-### 1. Use self-closing tags to keep your code compact
+### 1\. Use self-closing tags to keep your code compact
 
 ```jsx
 // ❌ Bad: too verbose
@@ -39,10 +42,12 @@ Ready? Let's dive in 💪!
 
 ---
 
-### 2. Prefer `fragments` over DOM nodes (e.g., div, span, etc.) to group elements
+### 2\. Prefer `fragments` over DOM nodes (e.g., div, span, etc.) to group elements
+
 In React, each component must return a single element. Instead of wrapping multiple elements in a `<div>` or `<span>`, use `<Fragment>` to keep your [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model) neat and tidy.
 
 **❌ Bad:** Using `div` clutters your DOM and may require more CSS code.
+
 ```jsx
 function Dashboard() {
   return (
@@ -53,7 +58,8 @@ function Dashboard() {
   );
 }
 ```
-**✅ Good:** `<Fragment>` wraps elements without affecting the DOM structure.
+
+**✅ Good:**`<Fragment>` wraps elements without affecting the DOM structure.
 
 ```jsx
 function Dashboard() {
@@ -68,7 +74,8 @@ function Dashboard() {
 
 ---
 
-### 3. Use React fragment shorthand `<></>` (except if you need to set a key)
+### 3\. Use React fragment shorthand `<></>` (except if you need to set a key)
+
 **❌ Bad:** The code below is unnecessarily verbose.
 
 ```jsx
@@ -79,6 +86,7 @@ function Dashboard() {
 ```
 
 **✅ Good:** Unless, you need a `key`, `<></>` is more concise.
+
 ```jsx
 <>
    <FirstChild />
@@ -102,7 +110,7 @@ function List({ users }) {
 
 ---
 
-### 4. Prefer spreading props over accessing each one individually
+### 4\. Prefer spreading props over accessing each one individually
 
 **❌ Bad:** The code below is harder to read (especially at scale).
 
@@ -129,6 +137,7 @@ function TodoList(props) {
 ```
 
 **✅ Good:** The code below is more concise.
+
 ```jsx
 function TodoList({ todos, selectedTodo, onSelectTodo }) {
   return (
@@ -152,8 +161,10 @@ function TodoList({ todos, selectedTodo, onSelectTodo }) {
 
 ---
 
-### 5. When setting default values for props, do it while destructuring them
+### 5\. When setting default values for props, do it while destructuring them
+
 **❌ Bad**: You may need to define the defaults in multiple places and introduce new variables.
+
 ```jsx
 function Button({ onClick, text, small, colorScheme }) {
   let scheme = colorScheme || "light";
@@ -173,6 +184,7 @@ function Button({ onClick, text, small, colorScheme }) {
 ```
 
 **✅ Good**: You can set all your defaults in one place at the top. This makes it easy for someone to locate them.
+
 ```jsx
 function Button({
   onClick,
@@ -196,7 +208,8 @@ function Button({
 
 ---
 
-### 6. Drop curly braces when passing `string` type props.
+### 6\. Drop curly braces when passing `string` type props.
+
 ```jsx
 // ❌ Bad: curly braces are not needed
 <Button text={"Click me"} colorScheme={"dark"} />
@@ -204,10 +217,13 @@ function Button({
 // ✅ Good
 <Button text="Click me" colorScheme="dark" />
 ```
+
 ---
 
-### 7. Ensure that `value` is a boolean before using `value && <Component {...props}/>` to prevent displaying unexpected values on the screen.
+### 7\. Ensure that `value` is a boolean before using `value && <Component {...props}/>` to prevent displaying unexpected values on the screen.
+
 **❌ Bad:** When the list is empty, `0` will be printed on the screen.
+
 ```jsx
 export function ListWrapper({ items, selectedItem, setSelectedItem }) {
   return (
@@ -225,6 +241,7 @@ export function ListWrapper({ items, selectedItem, setSelectedItem }) {
 ```
 
 ✅ **Good**: Nothing will be printed on the screen when there are no items.
+
 ```jsx
 export function ListWrapper({ items, selectedItem, setSelectedItem }) {
   return (
@@ -243,8 +260,10 @@ export function ListWrapper({ items, selectedItem, setSelectedItem }) {
 
 ---
 
-### 8. Use IIFE (Immediately Invoked Function Expression) to keep your code clean and avoid lingering variables
+### 8\. Use IIFE (Immediately Invoked Function Expression) to keep your code clean and avoid lingering variables
+
 ❌ **Bad**: The variables `gradeSum` and `gradeCount` are cluttering the component's scope.
+
 ```jsx
 function Grade() {
   let gradeSum = 0;
@@ -259,6 +278,7 @@ function Grade() {
 ```
 
 ✅ **Good**: The variables `gradeSum` and `gradeCount`are scoped within the IIFE.
+
 ```jsx
 function Grade() {
   const averageGrade = (() => {
@@ -273,12 +293,15 @@ function Grade() {
   return <>{averageGrade}</>;
 }
 ```
+
 > 💡 Note: you can also define a function `computeAverageGrade` outside the component and call it inside it.
 
 ---
 
-### 9. Use curried functions to reuse logic (and properly memoize callback functions)
+### 9\. Use curried functions to reuse logic (and properly memoize callback functions)
+
 **❌ Bad:** The logic for updating a field is very repetitive.
+
 ```jsx
 function Form() {
   const [{ name, email }, setFormState] = useState({
@@ -323,6 +346,7 @@ function Form() {
 ```
 
 **✅ Good:** Introduce `createFormValueChangeHandler` that returns the correct handler for each field.
+
 > Note: This trick is especially nice if you have the ESLint rule [jsx-no-bind](https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-no-bind.md) turned on. You can just wrap the curried function inside `useCallback` and "Voilà!".
 
 ```jsx
@@ -366,10 +390,12 @@ function Form() {
   );
 }
 ```
+
 ---
 
-### 10. Move data that doesn't rely on the component props/state outside of it for cleaner (and more efficient) code
-**❌ Bad:** `OPTIONS` and `renderOption` don't need to be inside the component because they don't depend on any props or state.
+### 10\. Move data that doesn't rely on the component props/state outside of it for cleaner (and more efficient) code
+
+**❌ Bad:**`OPTIONS` and `renderOption` don't need to be inside the component because they don't depend on any props or state.
 
 Also, keeping them inside means we get new object references every time the component renders. If we were to pass `renderOption` to a child component wrapped in `memo`, it would break the memoization.
 
@@ -391,6 +417,7 @@ function CoursesSelector() {
 ```
 
 **✅ Good:** Move them out of the component to keep the component clean and references stable.
+
 ```jsx
 const OPTIONS = ["Maths", "Literature", "History"];
 const renderOption = (option: string) => {
@@ -423,10 +450,13 @@ function CoursesSelector() {
   );
 }
 ```
+
 ---
 
-### 11. When storing the selected item from a list, store the item ID rather than the entire item
+### 11\. When storing the selected item from a list, store the item ID rather than the entire item
+
 **❌ Bad:** If an item is selected but then it changes (i.e., we receive a completely new object reference for the same ID), or if the item is no longer present in the list, `selectedItem` will either retain an outdated value or become incorrect.
+
 ```jsx
 function ListWrapper({ items }) {
   // We are referencing the entire item
@@ -446,6 +476,7 @@ function ListWrapper({ items }) {
 ```
 
 **✅ Good:** We store the selected item by its ID (which should be stable). This ensures that even if the item is removed from the list or one of its properties changed, the UI should be correct.
+
 ```jsx
 function ListWrapper({ items }) {
   const [selectedItemId, setSelectedItemId] = useState<number | undefined>();
@@ -467,8 +498,10 @@ function ListWrapper({ items }) {
 
 ---
 
-### 12. If you're frequently checking a prop's value before doing something, introduce a new component
+### 12\. If you're frequently checking a prop's value before doing something, introduce a new component
+
 **❌ Bad:** The code is cluttered because of all the `user == null` checks.
+
 > Here, we can't return early because of the [rules of hooks](https://react.dev/warnings/invalid-hook-call-warning).
 
 ```jsx
@@ -508,6 +541,7 @@ function Posts({ user }) {
 ```
 
 **✅ Good:** We introduce a new component, `UserPosts`, that takes a defined user and is much cleaner.
+
 ```jsx
 function Posts({ user }) {
   if (user == null) {
@@ -541,9 +575,10 @@ function UserPosts({ user }) {
 
 ---
 
-### 13. Use the CSS `:empty` pseudo-class to hide elements with no children
+### 13\. Use the CSS `:empty` pseudo-class to hide elements with no children
 
 In the example below 👇, a wrapper takes children and adds a red border around them.
+
 ```jsx
 function PostWrapper({ children }) {
   return <div className="posts-wrapper">{children}</div>;
@@ -558,7 +593,7 @@ function PostWrapper({ children }) {
 
 **❌ Problem:** The border remains visible on the screen even if the children are empty (i.e., equal to `null`, `undefined`, etc.).
 
-![Red border](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/yq53ai7xzx200bxreer2.png)
+![Red border](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/yq53ai7xzx200bxreer2.png align="left")
 
 **✅ Solution:** Use the `:empty` CSS pseudo-class to ensure the wrapper is not displayed when it's empty.
 
@@ -570,10 +605,12 @@ function PostWrapper({ children }) {
 
 ---
 
-### 14. Group all the state and context at the top of the component
+### 14\. Group all the state and context at the top of the component
+
 When all the state and context are located at the top, it is easy to spot what can trigger a component re-render.
 
 **❌ Bad:** State and context are scattered, making it hard to track.
+
 ```jsx
 function App() {
   const [email, setEmail] = useState("");
@@ -600,7 +637,9 @@ function App() {
   );
 }
 ```
+
 **✅ Good:** All state and context are grouped at the top, making it easy to spot.
+
 ```jsx
 function App() {
   const theme = useContext(ThemeContext);
@@ -634,14 +673,19 @@ function App() {
 
 ---
 
-### 15. Leverage the `children` props for cleaner code (and performance benefits)
+### 15\. Leverage the `children` props for cleaner code (and performance benefits)
+
 Using the `children` props has several benefits:
 
-- **Benefit #1:** You can avoid prop drilling by passing props directly to children components instead of routing them through the parent.
-- **Benefit #2:** Your code is more extensible since you can easily modify children without changing the parent component.
-- **Benefit #3:** You can use this trick to avoid re-rendering "slow" components (see in the example below 👇).
+* **Benefit #1:** You can avoid prop drilling by passing props directly to children components instead of routing them through the parent.
+    
+* **Benefit #2:** Your code is more extensible since you can easily modify children without changing the parent component.
+    
+* **Benefit #3:** You can use this trick to avoid re-rendering "slow" components (see in the example below 👇).
+    
 
-**❌ Bad:** `MyVerySlowComponent` renders whenever `Dashboard` renders, which happens every time the current time updates. You can see it in the next image, where I use [React Developer Tool's profiler](https://chromewebstore.google.com/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi).
+**❌ Bad:**`MyVerySlowComponent` renders whenever `Dashboard` renders, which happens every time the current time updates. You can see it in the next image, where I use [React Developer Tool's profiler](https://chromewebstore.google.com/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi).
+
 ```jsx
 function App() {
   // Some other logic…
@@ -668,12 +712,11 @@ function Dashboard() {
 }
 ```
 
-<figure>
-  <img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/ptrvtuiuhptr2adq9ica.gif">
-  <figcaption><strong>MyVerySlowComponent</strong> renders whenever <strong>Dashboard</strong> renders</figcaption>
-</figure>
+![](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/ptrvtuiuhptr2adq9ica.gif align="left")
 
-**✅ Good:** `MyVerySlowComponent` doesn't render when `Dashboard` renders.
+**MyVerySlowComponent** renders whenever **Dashboard** renders
+
+**✅ Good:**`MyVerySlowComponent` doesn't render when `Dashboard` renders.
 
 ```jsx
 function App() {
@@ -702,21 +745,21 @@ function Dashboard({ children }) {
 }
 ```
 
-<figure>
-  <img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/480znnhi87gws2u9qmuf.gif">
-  <figcaption><strong>MyVerySlowComponent</strong> doesn't render anymore</figcaption>
-</figure>
+![](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/480znnhi87gws2u9qmuf.gif align="left")
+
+**MyVerySlowComponent** doesn't render anymore
 
 ---
 
-### 16. Build composable code with `compound components`
+### 16\. Build composable code with `compound components`
+
 Think of compound components as **Lego** blocks.
 
 You piece them together to create a customized UI. These components work exceptionally well when creating libraries, resulting in both expressive and highly extendable code.
 
 > You can explore this pattern further here 👉 [Compound Pattern](https://www.patterns.dev/react/compound-pattern/)
 
-**Example from [reach.ui](https://reach.tech/menu-button)** (_Menu, MenuButton, MenuList, MenuLink_ are compound components)
+**Example from** [**reach.ui**](https://reach.tech/menu-button) (*Menu, MenuButton, MenuList, MenuLink* are compound components)
 
 ```jsx
 <Menu>
@@ -735,16 +778,15 @@ You piece them together to create a customized UI. These components work excepti
 
 ---
 
-### 17. Make your code more extensible with `render functions` or `component functions` props
+### 17\. Make your code more extensible with `render functions` or `component functions` props
+
 Let's say we want to display various lists, such as messages, profiles, or posts, and each one should be sortable.
 
 To achieve this, we introduce a `List` component for reuse. There are two ways we can go around this:
 
-**❌ Bad: Option 1**
-`List` handles rendering each item and how they are sorted. This is problematic as it violates the [Open Closed Principle](https://www.freecodecamp.org/news/open-closed-principle-solid-architecture-concept-explained/#whatistheopenclosedprinciple). Whenever a new item type is added, this code will be modified.
+**❌ Bad: Option 1**`List` handles rendering each item and how they are sorted. This is problematic as it violates the [Open Closed Principle](https://www.freecodecamp.org/news/open-closed-principle-solid-architecture-concept-explained/#whatistheopenclosedprinciple). Whenever a new item type is added, this code will be modified.
 
-**✅ Good: Option 2**
-`List` takes render functions or component functions, invoking them only when needed.
+**✅ Good: Option 2**`List` takes render functions or component functions, invoking them only when needed.
 
 You can find an example in this sandbox below 👇:
 
@@ -752,7 +794,7 @@ You can find an example in this sandbox below 👇:
 
 ---
 
-### 18. When dealing with different cases, use `value === case && <Component />` to avoid holding onto old state
+### 18\. When dealing with different cases, use `value === case && <Component />` to avoid holding onto old state
 
 **❌ Problem:** In the sandbox below, the counter doesn't reset when switching between `Posts` and `Snippets`. This happens because when rendering the same component, its state persists across type changes.
 
@@ -783,14 +825,19 @@ function App() {
   );
 }
 ```
+
 ---
 
-### 19. Always use error boundaries
+### 19\. Always use error boundaries
+
 By default, if your application encounters an error during rendering, the entire UI crashes 💥.
 
 To prevent this, use [error boundaries](https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary) to:
-- Keep parts of your app functional even if an error occurs.
-- Display user-friendly error messages and optionally track errors.
+
+* Keep parts of your app functional even if an error occurs.
+    
+* Display user-friendly error messages and optionally track errors.
+    
 
 > 💡 Tip: you can use the [react-error-boundary](https://www.npmjs.com/package/react-error-boundary) library.
 
@@ -800,40 +847,24 @@ To prevent this, use [error boundaries](https://react.dev/reference/react/Compon
 
 ---
 
-### 20. Use `crypto.randomUUID` or `Math.random` to generate keys
+### 20\. Use `crypto.randomUUID` or `Math.random` to generate keys
+
 JSX elements inside a `map()` call always need keys.
 
 Suppose your elements don't already have keys. In that case, you can generate unique IDs using `crypto.randomUUID`, `Math.random`, or the [uuid](https://www.npmjs.com/package/uuid) library.
 
 > Note: Beware that `crypto.randomUUID` is not defined in older browsers.
 
-```jsx
-function App({ fruits }) {
-  const fruitsWithIds = fruits.map((fruit) => ({
-    value: fruit,
-    id: crypto.randomUUID(), // or uuid.v4(), Math.random()
-  }));
-  return <List items={fruitsWithIds} />;
-}
-
-function List({ items }) {
-  return (
-    <ul>
-      {items.map(({ value, id }) => {
-        return <li key={id}>{value}</li>;
-      })}
-    </ul>
-  );
-}
-```
 ---
 
-### 21. Make sure your list items IDs are stable (i.e., they don't change between renders)
+### 21\. Make sure your list items IDs are stable (i.e., they don't change between renders)
+
 As much as possible, keys/IDs should be stable.
 
 Otherwise, React may re-render some components uselessly, or selections will no longer be valid, like in the example below.
 
-**❌ Bad:** `selectedQuoteId` changes whenever `App` renders, so there is never a valid selection.
+**❌ Bad:**`selectedQuoteId` changes whenever `App` renders, so there is never a valid selection.
+
 ```jsx
 function App() {
   const [quotes, setQuotes] = useState([]);
@@ -898,7 +929,8 @@ function App() {
 
 ---
 
-### 22. Strategically use the `key` attribute to trigger component re-renders
+### 22\. Strategically use the `key` attribute to trigger component re-renders
+
 Want to force a component to re-render from scratch? Just change its `key`.
 
 In the example below, we use this trick to reset the error boundary when switching to a new tab.
@@ -907,16 +939,21 @@ In the example below, we use this trick to reset the error boundary when switchi
 
 ---
 
-### 23. Use a `ref callback function` for tasks such as monitoring size changes and managing multiple node elements.
+### 23\. Use a `ref callback function` for tasks such as monitoring size changes and managing multiple node elements.
+
 Did you know you can pass a function to the `ref` attribute instead of a ref object?
 
 Here's how it works:
-- When the DOM node is added to the screen, React calls the function with the DOM node as the argument.
-- When the DOM node is removed, React calls the function with `null`.
+
+* When the DOM node is added to the screen, React calls the function with the DOM node as the argument.
+    
+* When the DOM node is removed, React calls the function with `null`.
+    
 
 In the example below, we use this tip to skip the `useEffect`
 
 **❌ Before:** Using `useEffect` to focus the input
+
 ```jsx
 function App() {
   const ref = useRef();
@@ -928,7 +965,9 @@ function App() {
   return <input ref={ref} type="text" />;
 }
 ```
+
 **✅ After:** We focus on the input as soon as it is available.
+
 ```jsx
 function App() {
   const ref = useCallback((inputNode) => {
@@ -945,17 +984,21 @@ function App() {
 
 ---
 
-### 24. Colocate React components with their assets (e.g., styles, images, etc.)
+### 24\. Colocate React components with their assets (e.g., styles, images, etc.)
+
 Always keep each React component with related assets, like styles and images.
 
-- This makes it easier to remove them when the component is no longer needed.
-- It also simplifies code navigation, as everything you need is in one place.
+* This makes it easier to remove them when the component is no longer needed.
+    
+* It also simplifies code navigation, as everything you need is in one place.
+    
 
-![Components folder structure](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/aqi13ygqu2hw2myf0u1h.png)
+![Components folder structure](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/aqi13ygqu2hw2myf0u1h.png align="left")
 
 ---
 
-### 25. Limit your component file size
+### 25\. Limit your component file size
+
 Big files with tons of components and exports can be confusing.
 
 Plus, they tend to grow even bigger as more stuff gets added.
@@ -964,7 +1007,8 @@ So, aim for a reasonable file size and split components into separate files when
 
 ---
 
-### 26. Limit the number of return statements in your functional component file
+### 26\. Limit the number of return statements in your functional component file
+
 Multiple `return` statements in a functional component make it hard to see what the component is returning.
 
 This was not a problem for class components where we could search for the `render` term.
@@ -972,6 +1016,7 @@ This was not a problem for class components where we could search for the `rende
 A handy trick is to use arrow functions without braces when possible (VSCode has an action for this 😀).
 
 **❌ Bad:** It is harder to spot the component return statement
+
 ```jsx
 function Dashboard({ posts, searchTerm, onPostSelect }) {
   const filteredPosts = posts.filter((post) => {
@@ -1000,6 +1045,7 @@ function Dashboard({ posts, searchTerm, onPostSelect }) {
 ```
 
 **✅ Good:** There is one return statement for the component
+
 ```jsx
 function Dashboard({ posts, searchTerm, onPostSelect, selectedPostId }) {
   const filteredPosts = posts.filter((post) => post.title.includes(searchTerm));
@@ -1027,7 +1073,7 @@ function Dashboard({ posts, searchTerm, onPostSelect, selectedPostId }) {
 
 ---
 
-### 27. Prefer named exports over default exports
+### 27\. Prefer named exports over default exports
 
 I see default exports everywhere, and it makes me sad 🥲.
 
@@ -1046,6 +1092,7 @@ export function Dashboard(props) {
 ```
 
 We now import the component like this:
+
 ```jsx
 /// Default export
 import Dashboard from "/path/to/Dashboard"
@@ -1057,7 +1104,8 @@ import { Dashboard } from "/path/to/Dashboard"
 
 **These are the problems with default exports:**
 
-- If the component is renamed, the IDE won't automatically rename the export.
+* If the component is renamed, the IDE won't automatically rename the export.
+    
 
 For example, if `Dashboard` is renamed into `Console`, we will have this:
 
@@ -1070,11 +1118,13 @@ import Dashboard from "/path/to/Console"
 import { Console } from "/path/to/Console"
 ```
 
-- It's harder to see what is exported from a file with default exports.
+* It's harder to see what is exported from a file with default exports.
+    
 
 For example, in the case of named imports, once I type `import { } from "/path/to/file"`, I get autocompletion when I set my cursor inside the brackets.
 
-- Default exports are harder to re-export.
+* Default exports are harder to re-export.
+    
 
 For example, if I wanted to re-export the `Dashboard` component from let's say an `index` file, I would have to do this:
 
@@ -1098,14 +1148,16 @@ So, please default to named exports 🙏.
 
 ---
 
-### 28. Never create a state for a value that can be derived from other state or props
+### 28\. Never create a state for a value that can be derived from other state or props
+
 More state = more trouble.
 
 Every piece of state can trigger a re-render and make resetting the state a hassle.
 
 So, if a value can be derived from state or props, skip adding a new state.
 
-**❌ Bad:** `filteredPosts` doesn't need to be in the state.
+**❌ Bad:**`filteredPosts` doesn't need to be in the state.
+
 ```jsx
 function App({ posts }) {
   const [filters, setFilters] = useState();
@@ -1127,7 +1179,8 @@ function App({ posts }) {
 }
 ```
 
-**✅ Good:** `filteredPosts` is derived from `posts` and `filters.`
+**✅ Good:**`filteredPosts` is derived from `posts` and `filters.`
+
 ```jsx
 function App({ posts }) {
   const [filters, setFilters] = useState({});
@@ -1141,15 +1194,17 @@ function App({ posts }) {
   );
 }
 ```
+
 ---
 
-### 29. Keep the state at the lowest level necessary to minimize re-renders
+### 29\. Keep the state at the lowest level necessary to minimize re-renders
 
 Whenever the state changes inside a component, React re-renders the component and all its children (there is an exception with children wrapped in [memo](https://react.dev/reference/react/memo)).
 
 This happens even if those children don't use the changed state. To minimize re-renders, move the state down the component tree as far as possible.
 
 **❌ Bad:** When `sortOrder` changes, both `LeftSidebar` and `RightSidebar` re-render.
+
 ```jsx
 function App() {
   const [sortOrder, setSortOrder] = useState("popular");
@@ -1182,7 +1237,8 @@ function Main({ sortOrder, setSortOrder }) {
 }
 ```
 
-**✅ Good:** `sortOrder` change will only affect `Main`.
+**✅ Good:**`sortOrder` change will only affect `Main`.
+
 ```jsx
 function App() {
   return (
@@ -1214,11 +1270,13 @@ function Main() {
   );
 }
 ```
+
 ---
 
-### 30. Clarify the distinction between the initial state and the current state
+### 30\. Clarify the distinction between the initial state and the current state
 
 **❌ Bad:** It's unclear that sortOrder is just the initial value, which may lead to confusion or errors in state management.
+
 ```jsx
 function Main({ sortOrder }) {
   const [internalSortOrder, setInternalSortOrder] = useState(sortOrder);
@@ -1242,6 +1300,7 @@ function Main({ sortOrder }) {
 ```
 
 **✅ Good:** Naming is clear about what is the initial state and what is current.
+
 ```jsx
 function Main({ initialSortOrder }) {
   const [sortOrder, setSortOrder] = useState(initialSortOrder);
@@ -1263,16 +1322,19 @@ function Main({ initialSortOrder }) {
   );
 }
 ```
+
 ---
 
-### 31. Update state based on the previous state, especially when memoizing with `useCallback`
+### 31\. Update state based on the previous state, especially when memoizing with `useCallback`
+
 React allows you to pass an updater function to the `set` function from `useState`.
 
 This updater function uses the current state to calculate the next state.
 
 I use this behavior whenever I need to update the state based on the previous state, especially inside functions wrapped with `useCallback.` In fact, this approach prevents the need to have the state as one of the hook dependencies.
 
-**❌ Bad:** `handleAddTodo` and `handleRemoveTodo` change whenever `todos` changes.
+**❌ Bad:**`handleAddTodo` and `handleRemoveTodo` change whenever `todos` changes.
+
 ```jsx
 function App() {
   const [todos, setToDos] = useState([]);
@@ -1299,7 +1361,8 @@ function App() {
 }
 ```
 
-**✅ Good:** `handleAddTodo` and `handleRemoveTodo` remain the same even when `todos` changes.
+**✅ Good:**`handleAddTodo` and `handleRemoveTodo` remain the same even when `todos` changes.
+
 ```jsx
 function App() {
   const [todos, setToDos] = useState([]);
@@ -1319,14 +1382,17 @@ function App() {
   );
 }
 ```
+
 ---
 
-### 32. Use functions in `useState` for lazy initialization and performance gains, as they are invoked only once.
+### 32\. Use functions in `useState` for lazy initialization and performance gains, as they are invoked only once.
+
 Using a function in useState ensures the initial state is computed only once.
 
 This can improve performance, especially when the initial state is derived from an "expensive" operation like reading from local storage.
 
 **❌ Bad:** We read the theme from local storage every time the component renders
+
 ```jsx
 const THEME_LOCAL_STORAGE_KEY = "101-react-tips-theme";
 
@@ -1356,6 +1422,7 @@ function PageWrapper({ children }) {
 ```
 
 **✅ Good:** We only read from the local storage when the component mounts.
+
 ```jsx
 function PageWrapper({ children }) {
   const [theme, setTheme] = useState(
@@ -1381,13 +1448,17 @@ function PageWrapper({ children }) {
   );
 }
 ```
+
 ---
 
-### 33. Use react context for broadly needed, static state to prevent prop drilling
+### 33\. Use react context for broadly needed, static state to prevent prop drilling
 
 I will use React context whenever I have some data that:
-- Is needed in multiple places (e.g., theme, current user, etc.)
-- Is mostly static or read-only (i.e., the user can't/doesn't change the data often)
+
+* Is needed in multiple places (e.g., theme, current user, etc.)
+    
+* Is mostly static or read-only (i.e., the user can't/doesn't change the data often)
+    
 
 This approach helps avoid prop drilling (i.e., passing down data or state through multiple layers of the component hierarchy).
 
@@ -1397,7 +1468,8 @@ See an example in the sandbox below 👇.
 
 ---
 
-### 34. React Context: Split your context into parts that change frequently and those that change infrequently to enhance app performance
+### 34\. React Context: Split your context into parts that change frequently and those that change infrequently to enhance app performance
+
 One challenge with React context is that all components consuming the context re-render whenever the context data changes, even if they don't use the part of the context that changed 🤦‍♀️.
 
 **A solution?** Use separate contexts.
@@ -1408,9 +1480,10 @@ In the example below, we've created two contexts: one for actions (which are con
 
 ---
 
-### 35. React Context: Introduce a `Provider` component when the value computation is not straightforward
+### 35\. React Context: Introduce a `Provider` component when the value computation is not straightforward
 
 **❌ Bad:** There is too much logic inside `App` to manage the theme.
+
 ```jsx
 export function App() {
   const [theme, setTheme] = useState(() =>
@@ -1445,6 +1518,7 @@ export function App() {
 ```
 
 **✅ Good:** The theme logic is encapsulated in `ThemeProvider`
+
 ```jsx
 export function App() {
   const [selectedPostId, setSelectedPostId] = useState(undefined);
@@ -1484,9 +1558,11 @@ function ThemeProvider({ children }) {
   );
 }
 ```
+
 ---
 
-### 36. Consider using the `useReducer` hook as a lightweight state management solution
+### 36\. Consider using the `useReducer` hook as a lightweight state management solution
+
 Whenever I have too many values in my state or a complex state and don't want to rely on external libraries, I will reach for `useReducer`.
 
 It's especially effective when combined with context for broader state management needs.
@@ -1495,7 +1571,8 @@ It's especially effective when combined with context for broader state managemen
 
 ---
 
-### 37. Simplify state updates with `useImmer` or `useImmerReducer`
+### 37\. Simplify state updates with `useImmer` or `useImmerReducer`
+
 With hooks like `useState` and `useReducer`, the state must be immutable (i.e., all changes need to create a new state vs. modifying the current one).
 
 This is often cumbersome to achieve.
@@ -1503,6 +1580,7 @@ This is often cumbersome to achieve.
 This is where [useImmer](https://github.com/immerjs/use-immer?tab=readme-ov-file#useimmer) and [useImmerReducer](https://github.com/immerjs/use-immer?tab=readme-ov-file#useimmerreducer) offer a simpler alternative. They allow you to write "mutable" code automatically converted to immutable updates.
 
 **❌ Bad:** We must carefully ensure we're creating a new state object.
+
 ```jsx
 export function App() {
   const [{ email, password }, setState] = useState({
@@ -1532,6 +1610,7 @@ export function App() {
 ```
 
 **✅ Good:** We can directly modify `draftState`.
+
 ```jsx
 import { useImmer } from "use-immer";
 
@@ -1554,14 +1633,21 @@ export function App() {
   /// Rest of logic
 }
 ```
+
 ---
 
-### 38. Use Redux (or another state management solution) for complex client-side state accessed across multiple components
+### 38\. Use Redux (or another state management solution) for complex client-side state accessed across multiple components
+
 I turn to [Redux](https://redux.js.org/) whenever:
-- I have a complex FE app with a lot of shared client-side state (for example, dashboard apps)
-- I want the user to be able to go back in time and revert changes
-- I don't want my components to re-render unnecessarily like they can with React context
-- I have too many contexts that start getting out of control
+
+* I have a complex FE app with a lot of shared client-side state (for example, dashboard apps)
+    
+* I want the user to be able to go back in time and revert changes
+    
+* I don't want my components to re-render unnecessarily like they can with React context
+    
+* I have too many contexts that start getting out of control
+    
 
 For a streamlined experience, I recommend using [redux-tooltkit](https://redux-toolkit.js.org/introduction/getting-started).
 
@@ -1569,7 +1655,7 @@ For a streamlined experience, I recommend using [redux-tooltkit](https://redux-t
 
 ---
 
-### 39. Redux: Use Redux DevTools to debug your state
+### 39\. Redux: Use Redux DevTools to debug your state
 
 The **Redux DevTools browser extension** is an useful tool for debugging your Redux projects.
 
@@ -1583,7 +1669,8 @@ To understand its use, watch this great [YouTube video](https://youtu.be/BYpuigD
 
 ---
 
-### 40. Prevent unnecessary re-renders with `memo`
+### 40\. Prevent unnecessary re-renders with `memo`
+
 When dealing with components that are costly to render and their parent components frequently update, wrapping them in [memo](https://react.dev/reference/react/memo) can be a game changer.
 
 `memo` ensures that a component only re-renders when its props have changed, not simply because its parent re-rendered.
@@ -1611,10 +1698,10 @@ const ExpensiveList = memo(
 
 > 💡: This tip may be irrelevant once [React compiler](https://react.dev/learn/react-compiler) gets stable 😅.
 
-
 ---
 
-### 41. Specify an equality function with `memo` to instruct React on how to compare the props.
+### 41\. Specify an equality function with `memo` to instruct React on how to compare the props.
+
 By default, `memo`uses [Object.is](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is) to compare each prop with its previous value.
 
 However, specifying a custom equality function can be more efficient than default comparisons or re-rendering for more complex or specific scenarios.
@@ -1637,14 +1724,17 @@ const ExpensiveList = memo(
   }
 )
 ```
+
 ---
 
-### 42. Prefer named functions over arrow functions when declaring a memoized component
+### 42\. Prefer named functions over arrow functions when declaring a memoized component
+
 When defining memoized components, using named functions instead of arrow functions can improve clarity in React DevTools.
 
 Arrow functions often result in generic names like `_c2`, making debugging and profiling more difficult.
 
 **❌ Bad:** Using arrow functions for memoized components results in less informative names in React DevTools.
+
 ```jsx
 const ExpensiveList = memo(
   ({ posts }) => {
@@ -1652,12 +1742,13 @@ const ExpensiveList = memo(
   }
 );
 ```
-<figure>
-  <img src="https://i.imgur.com/DhNujjR.png">
-  <figcaption><strong>ExpensiveList</strong> name is not visible</figcaption>
-</figure>
+
+![](https://i.imgur.com/DhNujjR.png align="left")
+
+**ExpensiveList** name is not visible
 
 **✅ Good:** The component's name will be visible in DevTools.
+
 ```jsx
 const ExpensiveList = memo(
   function ExpensiveListFn({ posts }) {
@@ -1666,19 +1757,22 @@ const ExpensiveList = memo(
 );
 ```
 
-<figure>
-  <img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/x95zmmg2z5cua6oj4hxq.png">
-  <figcaption>You can see <strong>ExpensiveListFn</strong> in DevTools</figcaption>
-</figure>
+![](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/x95zmmg2z5cua6oj4hxq.png align="left")
+
+You can see **ExpensiveListFn** in DevTools
 
 ---
 
-### 43. Cache expensive computations or preserve references with `useMemo`
+### 43\. Cache expensive computations or preserve references with `useMemo`
 
 I will generally `useMemo`:
-- When I have expensive computations that should not be repeated on each render.
-- If the computed value is a **non-primitive value** that is used as a dependency in hooks like `useEffect`.
-- The computed **non-primitive** value will be passed as a prop to a component wrapped in `memo`; otherwise, this will break the memoization since React uses [Object.is](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is) to detect whether props changed.
+
+* When I have expensive computations that should not be repeated on each render.
+    
+* If the computed value is a **non-primitive value** that is used as a dependency in hooks like `useEffect`.
+    
+* The computed **non-primitive** value will be passed as a prop to a component wrapped in `memo`; otherwise, this will break the memoization since React uses [Object.is](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is) to detect whether props changed.
+    
 
 **❌ Bad:** The `memo` for `ExpensiveList` does not prevent re-renders because styles are recreated on every render.
 
@@ -1704,6 +1798,7 @@ const ExpensiveList = memo(
 ```
 
 **✅ Good:** The use of `useMemo` ensures `styles` only changes when `baseStyles` changes, allowing `memo` to effectively prevent unnecessary re-renders.
+
 ```jsx
 export function App() {
   const { profileInfo, posts, baseStyles } = useGetDashboardData();
@@ -1724,7 +1819,8 @@ export function App() {
 
 ---
 
-### 44. Use `useCallback` to memoize functions
+### 44\. Use `useCallback` to memoize functions
+
 `useCallback` is similar to `useMemo` but is designed explicitly for memoizing functions.
 
 **❌ Bad:** Whenever the theme changes, `handleThemeChange` will be called twice, and we will push logs to the server twice.
@@ -1772,15 +1868,16 @@ const handleThemeChange = useCallback((newTheme) => {
     setTheme(newTheme);
   }, []);
 ```
+
 ---
 
-### 45. Memoize callbacks or values returned from utility hooks to avoid performance issues
+### 45\. Memoize callbacks or values returned from utility hooks to avoid performance issues
 
 When you create a custom hook to share with others, memoizing the returned values and functions is crucial.
 
 This practice makes your hook more efficient and prevents unnecessary performance issues for anyone using it.
 
-**❌ Bad:** `loadData` is not memoized and creates performance issues.
+**❌ Bad:**`loadData` is not memoized and creates performance issues.
 
 ```jsx
 function useLoadData(fetchData) {
@@ -1830,43 +1927,48 @@ function useLoadData(fetchData) {
   return useMemo(() => ({ result, loadData }), [result, loadData])
 }
 ```
+
 ---
 
-### 46. Leverage lazy loading and `Suspense` to make your apps load faster
+### 46\. Leverage lazy loading and `Suspense` to make your apps load faster
+
 When you're building your app, consider using lazy loading and `Suspense` for code that is:
 
-- Expensive to load.
-- Only relevant to some users (like premium features).
-- Not immediately necessary for the initial user interaction.
+* Expensive to load.
+    
+* Only relevant to some users (like premium features).
+    
+* Not immediately necessary for the initial user interaction.
+    
 
 In the **sandbox** below 👇, the Slider assets (JS + CSS) only load after you click on a card.
 
 > [**🏖 Sandbox**](https://stackblitz.com/edit/vitejs-vite-czefdj?file=src%2FApp.jsx)
 
-<figure>
-  <img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/5t1d58u6qq6dxl2lu1wu.png">
-  <figcaption>Slider assets only load when needed</figcaption>
-</figure>
+![](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/5t1d58u6qq6dxl2lu1wu.png align="left")
 
+Slider assets only load when needed
 
 ---
 
-### 47. Throttle your network to simulate a slow network
+### 47\. Throttle your network to simulate a slow network
+
 Did you know you can simulate slow internet connections directly in Chrome?
 
 This is especially useful when:
 
-- Customers report slow loading times that you can't replicate on your faster network.
-- You're implementing lazy loading and want to observe how files load under slower conditions to ensure appropriate loading states.
+* Customers report slow loading times that you can't replicate on your faster network.
+    
+* You're implementing lazy loading and want to observe how files load under slower conditions to ensure appropriate loading states.
+    
 
-<figure>
-  <img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/b5hrtnmrvkuxd63tbitf.gif">
-  <figcaption>Throttling network requests to observe lazy loading</figcaption>
-</figure>
+![](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/b5hrtnmrvkuxd63tbitf.gif align="left")
+
+Throttling network requests to observe lazy loading
 
 ---
 
-### 48. Use `react-window` or `react-virtuoso` to efficiently render lists
+### 48\. Use `react-window` or `react-virtuoso` to efficiently render lists
 
 Never render a long list of items all at once—such as chat messages, logs, or infinite lists.
 
@@ -1876,7 +1978,7 @@ Instead, virtualize the list. This means rendering only the subset of items like
 
 Libraries like [react-window](https://github.com/bvaughn/react-window), [react-virtuoso](https://virtuoso.dev/) or [@tanstack/react-virtual](https://tanstack.com/virtual/latest/docs/introduction) are designed for this purpose.
 
-**❌ Bad:** `NonVirtualList` renders all 50,000 log lines simultaneously, even if they aren't visible.
+**❌ Bad:**`NonVirtualList` renders all 50,000 log lines simultaneously, even if they aren't visible.
 
 ```jsx
 function NonVirtualList({ items }) {
@@ -1899,7 +2001,8 @@ function NonVirtualList({ items }) {
 }
 ```
 
-**✅ Good:** `VirtualList` renders only the items likely to be visible.
+**✅ Good:**`VirtualList` renders only the items likely to be visible.
+
 ```jsx
 function VirtualList({ items }) {
   return (
@@ -1933,12 +2036,16 @@ You can switch between the two options in the sandbox below and notice how bad t
 
 ---
 
-### 49. Use `StrictMode` to catch bugs in your components before deploying them to production
+### 49\. Use `StrictMode` to catch bugs in your components before deploying them to production
+
 Using [StrictMode](https://react.dev/reference/react/StrictMode) is a proactive way to detect potential issues in your application during development.
 
 It helps identify problems such as:
-- Incomplete cleanup in effects, like forgetting to release resources.
-- Impurities in React components, ensuring they return consistent JSX given the same inputs (props, state, and context).
+
+* Incomplete cleanup in effects, like forgetting to release resources.
+    
+* Impurities in React components, ensuring they return consistent JSX given the same inputs (props, state, and context).
+    
 
 The example below shows a bug because `clearInterval` is never called. `StrictMode` helps catch this by running the effect twice, which creates two intervals.
 
@@ -1946,32 +2053,39 @@ The example below shows a bug because `clearInterval` is never called. `StrictMo
 
 ---
 
-### 50. Install the React Developer Tools browser extension to view/edit your components and detect performance issues
+### 50\. Install the React Developer Tools browser extension to view/edit your components and detect performance issues
 
 React Developer Tools is a must extension ([Chrome](https://chromewebstore.google.com/detail/fmkadmapgofadopljbjfkapdkoienihi), [Firefox](https://addons.mozilla.org/en-US/firefox/addon/react-devtools/)).
 
 This extension lets you:
-- Visualize and delve into the details of your React components, examining everything from props to state.
-- Directly modify a component's state or props to see how changes affect behavior and rendering.
-- Profile your application to identify when and why components are re-rendering, helping you spot performance issues.
-- Etc.
+
+* Visualize and delve into the details of your React components, examining everything from props to state.
+    
+* Directly modify a component's state or props to see how changes affect behavior and rendering.
+    
+* Profile your application to identify when and why components are re-rendering, helping you spot performance issues.
+    
+* Etc.
+    
 
 > 💡 Learn how to use it in this great [guide](https://www.freecodecamp.org/news/how-to-use-react-dev-tools/).
 
 ---
 
-### 51. React DevTools Components: Highlight components that render to identify potential issues
+### 51\. React DevTools Components: Highlight components that render to identify potential issues
+
 I will use this trick whenever I suspect that my app has performance issues. You can highlight the components that render to detect potential problems (e.g., too many renders).
 
 The gif below shows that the `FollowersListFn` component re-renders whenever the time changes, which is wrong.
 
-<figure>
-  <img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/upp8xgmrmzdc79mfz1q5.gif">
-  <figcaption>Highlight updates when components render.</figcaption>
-</figure>
----
+![](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/upp8xgmrmzdc79mfz1q5.gif align="left")
 
-### 52. Leverage `useDebugValue` in your custom hooks for better visibility in React DevTools
+Highlight updates when components render.
+
+\---
+
+### 52\. Leverage `useDebugValue` in your custom hooks for better visibility in React DevTools
+
 [useDebugValue](https://react.dev/reference/react/useDebugValue) can be a handy tool for adding descriptive labels to your custom hooks in React DevTools.
 
 This makes it easier to monitor their states directly from the DevTools interface.
@@ -1995,35 +2109,33 @@ function useCurrentTime(){
 
 **❌ Bad:** Without `useDebugValue`, the actual time value isn't immediately visible; you'd need to expand the CurrentTime hook:
 
-<figure>
-  <img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/kangnk8gzzpvzynhcesl.png">
-  <figcaption>Current time not quickly visible on the devtools</figcaption>
-</figure>
+![](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/kangnk8gzzpvzynhcesl.png align="left")
+
+Current time not quickly visible on the devtools
 
 **✅ Good:** With `useDebugValue`, the current time is readily visible:
+
 ```jsx
 useDebugValue(time)
 ```
 
-<figure>
-  <img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/r1ilx97d01ownw9933zb.png">
-  <figcaption>Current time quickly visible on the devtools</figcaption>
-</figure>
+![](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/r1ilx97d01ownw9933zb.png align="left")
+
+Current time quickly visible on the devtools
 
 > Note: Use `useDebugValue` judiciously. It's best reserved for complex hooks in shared libraries where understanding the internal state is crucial.
 
 ---
 
-### 53. Use the `why-did-you-render` library to track component rendering and identify potential performance bottlenecks
+### 53\. Use the `why-did-you-render` library to track component rendering and identify potential performance bottlenecks
 
 Sometimes, a component re-renders, and it's not immediately clear why 🤦‍♀️.
 
 While React DevTools is helpful, in large apps, it might only provide vague explanations like "hook #1 rendered," which can be useless.
 
-<figure>
-  <img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/me1hs1f232w3bpvwfhu4.png">
-  <figcaption>App rendering because of hook 1 change</figcaption>
-</figure>
+![](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/me1hs1f232w3bpvwfhu4.png align="left")
+
+App rendering because of hook 1 change
 
 In such cases, you can turn to the [why-did-you-render](https://github.com/welldone-software/why-did-you-render) library. It offers more detailed insights into why components re-render, helping to pinpoint performance issues more effectively.
 
@@ -2031,15 +2143,13 @@ I made an example in the sandbox below 👇. Thanks to this library, we can find
 
 > [**🏖 Sandbox**](https://codesandbox.io/p/sandbox/why-did-you-render-sandbox-forked-nc4fnk?from-embed=)
 
-<figure>
-  <img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/g889xopi0k3qdjz7tab6.png">
-  <figcaption><em>why-did-you-render</em> console logs</figcaption>
-</figure>
+![](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/g889xopi0k3qdjz7tab6.png align="left")
 
+*why-did-you-render* console logs
 
 ---
 
-### 54. Hide logs during the second render in Strict Mode
+### 54\. Hide logs during the second render in Strict Mode
 
 [StrictMode](https://react.dev/reference/react/StrictMode) helps catch bugs early in your application's development.
 
@@ -2049,7 +2159,7 @@ You can hide logs during the second render in Strict Mode to address this.
 
 Check out how to do it in the gif below 👇:
 
-![Hide logs during the second render in Strict Mode](https://i.imgur.com/ozccbE2.gif)
+![Hide logs during the second render in Strict Mode](https://i.imgur.com/ozccbE2.gif align="left")
 
 ---
 
@@ -2057,7 +2167,7 @@ Check out how to do it in the gif below 👇:
 
 ---
 
-### 55. Use `React Testing Library` to test your React components effectively
+### 55\. Use `React Testing Library` to test your React components effectively
 
 Want to test your React apps?
 
@@ -2067,7 +2177,8 @@ You can find a minimal example [here](https://testing-library.com/docs/react-tes
 
 ---
 
-### 56. React Testing Library: Use testing playground to effortlessly create queries
+### 56\. React Testing Library: Use testing playground to effortlessly create queries
+
 Struggling to decide which queries to use in your tests?
 
 Consider using [testing playground](https://testing-playground.com/) to quickly generate them from your component's HTML.
@@ -2076,25 +2187,26 @@ Here are two ways to leverage it:
 
 **Option #1:** Use `screen.logTestingPlaygroundURL()` in your test. This function generates a URL that opens the Testing Playground tool with the HTML of your component already loaded.
 
-![Using screen.logTestingPlaygroundURL](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/8qevn3ro4jr5ykvy4ns3.png)
+![Using screen.logTestingPlaygroundURL](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/8qevn3ro4jr5ykvy4ns3.png align="left")
 
-**Option #2:** Install[ Testing Playground Chrome extension](https://chromewebstore.google.com/detail/testing-playground/hejbmebodbijjdhflfknehhcgaklhano). This extension allows you to hover over elements in your app directly in the browser to find the best queries for testing them.
+**Option #2:** Install [Testing Playground Chrome extension](https://chromewebstore.google.com/detail/testing-playground/hejbmebodbijjdhflfknehhcgaklhano). This extension allows you to hover over elements in your app directly in the browser to find the best queries for testing them.
 
-![Using testing playground extension](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/y7ul73mmlq600e26gvrr.png)
+![Using testing playground extension](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/y7ul73mmlq600e26gvrr.png align="left")
 
 ---
 
-### 57. Conduct end-to-end tests with `Cypress` or `Playwright`
+### 57\. Conduct end-to-end tests with `Cypress` or `Playwright`
 
 Need to conduct end-to-end tests?
 
 Make sure to check out [Cypress](https://docs.cypress.io/guides/component-testing/react/overview) or [Playwright](https://playwright.dev/docs/test-components).
 
-> _Note:_ Playwright's support for components is experimental at the time of writing.
+> *Note:* Playwright's support for components is experimental at the time of writing.
 
 ---
 
-### 58. Use `MSW` to mock network requests in your tests
+### 58\. Use `MSW` to mock network requests in your tests
+
 Sometimes, your tests need to make network requests.
 
 Rather than implementing your own mocks (or, God forbid, making actual network requests 😅), consider using [MSW (Mock Service Worker)](https://mswjs.io/) to handle your API responses.
@@ -2109,7 +2221,7 @@ This approach helps maintain a controlled and predictable testing environment, e
 
 ---
 
-### 59. Make sure you perform any required cleanup in your `useEffect` hooks
+### 59\. Make sure you perform any required cleanup in your `useEffect` hooks
 
 Always return a cleanup function in your `useEffect` hooks if you're setting up anything that needs to be cleaned up later.
 
@@ -2133,6 +2245,7 @@ function Timer() {
 ```
 
 **✅ Good:** The interval is properly cleared when the component unmounts.
+
 ```jsx
 function Timer() {
   const [time, setTime] = useState(new Date());
@@ -2147,9 +2260,10 @@ function Timer() {
   return <>Current time {time.toLocaleTimeString()}</>;
 }
 ```
+
 ---
 
-### 60. Use `refs` for accessing DOM elements
+### 60\. Use `refs` for accessing DOM elements
 
 You should never manipulate the DOM directly with React.
 
@@ -2161,11 +2275,11 @@ You can use the [useRef](https://react.dev/reference/react/useRef) hook, like in
 
 > [**🏖 Sandbox**](https://codesandbox.io/p/sandbox/chart-js-example-xdrnqv?from-embed=)
 
-> _Note:_ We could have added an ID to the canvas and used `document.getElementById`, but this is not recommended.
+> *Note:* We could have added an ID to the canvas and used `document.getElementById`, but this is not recommended.
 
 ---
 
-### 61. Use `refs` to preserve values across re-renders
+### 61\. Use `refs` to preserve values across re-renders
 
 If you have mutable values in your React component that aren't stored in the state, you'll notice that changes to these values don't persist through re-renders.
 
@@ -2232,15 +2346,17 @@ function Timer() {
   );
 }
 ```
+
 ---
 
-### 62. Prefer named functions over arrow functions within hooks such as `useEffect` to easily find them in React Dev Tools
+### 62\. Prefer named functions over arrow functions within hooks such as `useEffect` to easily find them in React Dev Tools
 
 If you have many hooks, finding them in React DevTools can be challenging.
 
 One trick is to use named functions so you can quickly spot them.
 
 **❌ Bad:** It's hard to find the specific effect among many hooks.
+
 ```jsx
 function HelloWorld() {
   useEffect(() => {
@@ -2249,13 +2365,11 @@ function HelloWorld() {
 
   return <>Hello World</>;
 }
-
 ```
-<figure>
-  <img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/hnrzeovfn1uw1opy0ca0.png">
-  <figcaption>Effect has no associated name</figcaption>
-</figure>
 
+![](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/hnrzeovfn1uw1opy0ca0.png align="left")
+
+Effect has no associated name
 
 **✅ Good:** You can quickly spot the effect.
 
@@ -2269,19 +2383,19 @@ function HelloWorld() {
 }
 ```
 
-<figure>
-  <img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/7u76jr3v823lcam3nf98.png">
-  <figcaption>Effect with associated name</figcaption>
-</figure>
+![](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/7u76jr3v823lcam3nf98.png align="left")
+
+Effect with associated name
 
 ---
 
-### 63. Encapsulate logic with custom hooks
+### 63\. Encapsulate logic with custom hooks
+
 Let's say I have a component that gets the theme from the user's dark mode preferences and uses it inside the app.
 
 It's better to extract the logic that returns the theme into a custom hook (to reuse it and keep the component clean).
 
-**❌ Bad:** `App` is overcrowded
+**❌ Bad:**`App` is overcrowded
 
 ```jsx
 function App() {
@@ -2305,8 +2419,8 @@ function App() {
 }
 ```
 
+**✅ Good:**`App` is much simpler, and we can reuse the logic
 
-**✅ Good:** `App` is much simpler, and we can reuse the logic
 ```jsx
 function App() {
   const theme = useTheme();
@@ -2338,15 +2452,20 @@ function useTheme() {
 
 ---
 
-### 64. Prefer functions over custom hooks
+### 64\. Prefer functions over custom hooks
 
 Never put logic inside a hook when a function can be used 🛑.
 
 In effect:
-- Hooks can only be used inside other hooks or components, whereas functions can be used everywhere.
-- Functions are simpler than hooks.
-- Functions are easier to test.
-- Etc.
+
+* Hooks can only be used inside other hooks or components, whereas functions can be used everywhere.
+    
+* Functions are simpler than hooks.
+    
+* Functions are easier to test.
+    
+* Etc.
+    
 
 **❌ Bad:** The `useLocale` hook is unnecessary since it doesn't need to be a hook. It doesn't use other hooks like `useEffect`, `useState`, etc.
 
@@ -2368,6 +2487,7 @@ function useLocale() {
 ```
 
 **✅ Good:** Create a function `getLocale` instead
+
 ```jsx
 function App() {
   const locale = getLocale();
@@ -2387,7 +2507,7 @@ function getLocale() {
 
 ---
 
-### 65. Prevent visual UI glitches by using the `useLayoutEffect` hook
+### 65\. Prevent visual UI glitches by using the `useLayoutEffect` hook
 
 When an effect isn't caused by a user interaction, the user will see the UI before the effect runs (often briefly).
 
@@ -2405,7 +2525,7 @@ If you're looking for another great usage, check out this [post](https://www.dev
 
 ---
 
-### 66. Generate unique IDs for accessibility attributes with the `useId` hook
+### 66\. Generate unique IDs for accessibility attributes with the `useId` hook
 
 Tired of coming up with IDs or having them clash?
 
@@ -2427,22 +2547,28 @@ function Form() {
   );
 }
 ```
+
 ---
 
-### 67. Use the `useSyncExternalStore`to subscribe to an external store
+### 67\. Use the `useSyncExternalStore`to subscribe to an external store
 
 This is a rarely needed but super powerful hook 💪.
 
 Use this hook if:
-- You have some state not accessible in the React tree (i.e., not present in the state or context)
-- The state can change, and you need your component to be notified of changes
 
-In the example below, I want a `Logger` [singleton](https://www.patterns.dev/vanilla/singleton-pattern/) to log errors, warnings, info, etc., in my entire app.
+* You have some state not accessible in the React tree (i.e., not present in the state or context)
+    
+* The state can change, and you need your component to be notified of changes
+    
+
+In the example below, I want a `Logger`[singleton](https://www.patterns.dev/vanilla/singleton-pattern/) to log errors, warnings, info, etc., in my entire app.
 
 These are the **requirements**:
 
-- I need to be able to call this everywhere in my React app (even inside non-React components), so I won't put it inside a state/context.
-- I want to display all the logs to the user inside a `Logs` component
+* I need to be able to call this everywhere in my React app (even inside non-React components), so I won't put it inside a state/context.
+    
+* I want to display all the logs to the user inside a `Logs` component
+    
 
 👉 I can use `useSyncExternalStore` inside my `Logs` component to access the logs and listen to changes.
 
@@ -2486,7 +2612,8 @@ export const Logger = createLogger();
 
 ---
 
-### 68. Use the `useDeferredValue` hook to display the previous query results until the new results become available
+### 68\. Use the `useDeferredValue` hook to display the previous query results until the new results become available
+
 Imagine you're building an app that represents countries on a map.
 
 Users can filter to see countries up to a specific population size.
@@ -2514,14 +2641,15 @@ If you're looking for another great usage, check out this [post](https://www.jos
 
 ---
 
-### 69. Incorporate routing into your app with `react-router`
+### 69\. Incorporate routing into your app with `react-router`
+
 If you need your app to support multiple pages, check out [react-router](https://reactrouter.com/).
 
 You can find a minimal example [here](https://reactrouter.com/en/main/start/tutorial).
 
 ---
 
-### 70. Implement first-class data fetching in your app with `swr` or `React Query`
+### 70\. Implement first-class data fetching in your app with `swr` or `React Query`
 
 Data fetching can be notoriously tricky.
 
@@ -2531,54 +2659,69 @@ I recommend [swr](https://swr.vercel.app/) for simple use cases and [React Query
 
 ---
 
-### 71. Simplify form state management with libraries like `formik`, `React Hook Form`, or `TanStack Form`
+### 71\. Simplify form state management with libraries like `formik`, `React Hook Form`, or `TanStack Form`
+
 I used to hate form management in React 🥲.
 
 That was until I discovered libraries like:
-- [formik](https://formik.org/)
-- [React Hook Form](https://react-hook-form.com/), or
-- or [TanStack Form](https://tanstack.com/form)
+
+* [formik](https://formik.org/)
+    
+* [React Hook Form](https://react-hook-form.com/), or
+    
+* or [TanStack Form](https://tanstack.com/form)
+    
 
 So make sure to check these out if you're struggling with forms.
 
 ---
 
-### 72. Internationalize your app using `Format.js,` `Lingui,` or `react-i18next.`
+### 72\. Internationalize your app using `Format.js,Lingui,` or `react-i18next.`
+
 If your app needs to support multiple languages, it should be internationalized.
 
 You can achieve this with libraries like:
-- [Format.js](https://formatjs.io/)
-- [Lingui](https://lingui.js.org/)
-- [react-i18next](https://react.i18next.com/)
+
+* [Format.js](https://formatjs.io/)
+    
+* [Lingui](https://lingui.js.org/)
+    
+* [react-i18next](https://react.i18next.com/)
+    
 
 ---
 
-### 73. Effortlessly create impressive animations with `framer-motion`
+### 73\. Effortlessly create impressive animations with `framer-motion`
+
 Animations can make your app stand out 🔥.
 
 You can create them easily with [framer-motion](https://www.framer.com/motion/).
 
 ---
 
-### 74. Tired of re-inventing the wheel with custom hooks? Check out https://usehooks.com/
+### 74\. Tired of re-inventing the wheel with custom hooks? Check out https://usehooks.com/
+
 If you're like me, you've written the same hooks over and over again.
 
 So check [usehooks.com](https://usehooks.com/) first to see if someone has already done the work for you.
 
 ---
 
-### 75. Streamline app development by leveraging UI libraries like Shadcdn or Headless UI
+### 75\. Streamline app development by leveraging UI libraries like Shadcdn or Headless UI
+
 It's hard to build UI at scale that is accessible, responsive, and beautiful.
 
 Libraries like [Shadcdn](https://ui.shadcn.com/) or [Headless UI](https://headlessui.com/) make it easier.
 
-- Shadcdn provides a set of accessible, reusable, and composable React components that you can copy and paste into your apps. At the time of writing, it requires Tailwind CSS.
-
-- Headless UI provides unstyled, fully accessible UI components that you can use to build your own UI components.
+* Shadcdn provides a set of accessible, reusable, and composable React components that you can copy and paste into your apps. At the time of writing, it requires Tailwind CSS.
+    
+* Headless UI provides unstyled, fully accessible UI components that you can use to build your own UI components.
+    
 
 ---
 
-### 76. Check your website's accessibility with the `axe-core-npm` library
+### 76\. Check your website's accessibility with the `axe-core-npm` library
+
 Websites should be accessible to everyone.
 
 However, it's easy to miss accessibility issues.
@@ -2589,7 +2732,8 @@ However, it's easy to miss accessibility issues.
 
 ---
 
-### 77. Refactor React code effortlessly with `react-codemod`
+### 77\. Refactor React code effortlessly with `react-codemod`
+
 Codemods are transformations that run on your codebase programmatically 💻.
 
 They make it easy to refactor your codebase.
@@ -2600,7 +2744,7 @@ So, make sure to check those out before manually refactoring your code.
 
 ---
 
-### 78. Transform your app into a Progressive Web Application (PWA) using vite-pwa
+### 78\. Transform your app into a Progressive Web Application (PWA) using vite-pwa
 
 Progressive Web Applications (PWAs) load like regular web pages but offer functionality such as working offline, push notifications, and device hardware access.
 
@@ -2612,31 +2756,36 @@ You can easily create a PWA in React using [vite-pwa](https://vite-pwa-org.netli
 
 ---
 
-### 79. Enhance your productivity with the Simple React Snippets snippets extension
+### 79\. Enhance your productivity with the Simple React Snippets snippets extension
+
 Bootstrapping a new React component can be tedious 😩.
 
 Snippets from the [Simple React Snippets](https://marketplace.visualstudio.com/items?itemName=burkeholland.simple-react-snippets) extension make it easier.
 
 ---
 
-### 80. Set `editor.stickyScroll.enabled` to `true` to quickly locate the current component
+### 80\. Set `editor.stickyScroll.enabled` to `true` to quickly locate the current component
+
 I love this feature ❤️.
 
 If you have a big file, it can be hard to locate the current component.
 
 By setting `editor.stickyScroll.enabled` to `true`, the current component will always be at the top of the screen.
 
-- **❌ Without sticky scroll**
+* **❌ Without sticky scroll**
+    
 
-![Without Sticky Scroll](https://i.imgur.com/nCdd3uL.gif)
+![Without Sticky Scroll](https://i.imgur.com/nCdd3uL.gif align="left")
 
-- **✅ With sticky scroll**
+* **✅ With sticky scroll**
+    
 
-![With Sticky Scroll](https://i.imgur.com/NdBGSir.gif)
+![With Sticky Scroll](https://i.imgur.com/NdBGSir.gif align="left")
 
 ---
 
-### 81. Simplify refactoring with extensions like VSCode Glean or VSCode React Refactor
+### 81\. Simplify refactoring with extensions like VSCode Glean or VSCode React Refactor
+
 If you need to refactor your code frequently (for example, extract JSX into a new component), make sure to check out extensions like [VSCode Glean](https://marketplace.visualstudio.com/items?itemName=wix.glean) or [VSCode React Refactor](https://marketplace.visualstudio.com/items?itemName=planbcoding.vscode-react-refactor).
 
 ---
@@ -2645,7 +2794,8 @@ If you need to refactor your code frequently (for example, extract JSX into a ne
 
 ---
 
-### 82. Use `ReactNode` instead of `JSX.Element | null | undefined | ...` to keep your code more compact
+### 82\. Use `ReactNode` instead of `JSX.Element | null | undefined | ...` to keep your code more compact
+
 I see this mistake a lot.
 
 Instead of typing your children's prop like this:
@@ -2672,7 +2822,7 @@ const MyComponent = ({ children }: { children: ReactNode }) => {
 
 ---
 
-### 83. Simplify the typing of components expecting children props with `PropsWithChildren`
+### 83\. Simplify the typing of components expecting children props with `PropsWithChildren`
 
 You don't have to type the `children` prop manually.
 
@@ -2692,7 +2842,8 @@ const HeaderPage = ({ children, ...pageProps } : PropsWithChildren<PageProps>) =
 
 ---
 
-### 84. Access element props efficiently with `ComponentProps`, `ComponentPropsWithoutRef`,…
+### 84\. Access element props efficiently with `ComponentProps`, `ComponentPropsWithoutRef`,…
+
 There are cases where you need to figure out a component's props.
 
 For example, let's say you want a button that will log to the console when clicked.
@@ -2723,7 +2874,8 @@ const MyComponentWithLogging = (props: ComponentProps<typeof MyComponent>) => {
 
 ---
 
-### 85. Leverage types like `MouseEventHandler`, `FocusEventHandler` and others for concise typings
+### 85\. Leverage types like `MouseEventHandler`, `FocusEventHandler` and others for concise typings
+
 Rather than typing the event handlers manually, you can use types like `MouseEventHandler` to keep the code more concise and readable.
 
 ```jsx
@@ -2748,7 +2900,8 @@ const MyComponent = ({ onClick, onFocus, onChange }: {
 
 ---
 
-### 86. Specify types explicitly in useState, useRef, etc., when the type can't be or shouldn't be inferred from the initial value
+### 86\. Specify types explicitly in useState, useRef, etc., when the type can't be or shouldn't be inferred from the initial value
+
 Don't forget to specify the type when it can't be inferred from the initial value.
 
 For example, in the example below, there is a `selectedItemId` stored in the state. It should be a `string` or `undefined`.
@@ -2762,11 +2915,13 @@ const [selectedItemId, setSelectedItemId] = useState(undefined);
 // ✅ Good
 const [selectedItemId, setSelectedItemId] = useState<string | undefined>(undefined);
 ```
+
 > 💡 Note: The opposite of this is that you don't need to specify the type when TypeScript can infer it for you.
 
 ---
 
-### 87. Leverage the `Record` type for cleaner and more extensible code
+### 87\. Leverage the `Record` type for cleaner and more extensible code
+
 I love this helper type.
 
 Let's say I have a type that represents log levels.
@@ -2801,11 +2956,11 @@ Additionally, it helps capture any error if a new log level is added or removed.
 
 For example, if I decided to add a `debug` log level, TypeScript would throw an error.
 
-![Error with debug item](https://i.imgur.com/m0WzKT3.png)
+![Error with debug item](https://i.imgur.com/m0WzKT3.png align="left")
 
 ---
 
-### 88. Use the `as const` trick to accurately type your hook return values
+### 88\. Use the `as const` trick to accurately type your hook return values
 
 Let's say we have a hook `useIsHovered` to detect whether a div element is hovered.
 
@@ -2822,7 +2977,7 @@ const useIsHovered = () => {
 
 Currently, TypeScript will not correctly infer the function return type.
 
-![Incorrect return type for function](https://i.imgur.com/pjVi1t9.png)
+![Incorrect return type for function](https://i.imgur.com/pjVi1t9.png align="left")
 
 You can either fix this by explicitly typing the return type like this:
 
@@ -2841,9 +2996,11 @@ const useIsHovered = () => {
   return [ref, isHovered] as const;
 };
 ```
+
 ---
 
-### 89. Redux: Ensure proper typing by referring to https://react-redux.js.org/using-react-redux/usage-with-typescript to correctly type your Redux state and helpers
+### 89\. Redux: Ensure proper typing by referring to https://react-redux.js.org/using-react-redux/usage-with-typescript to correctly type your Redux state and helpers
+
 I love using Redux to manage heavy client-side state.
 
 It also works well with TypeScript.
@@ -2852,7 +3009,7 @@ You can find a great guide on how to use Redux with TypeScript [here](https://re
 
 ---
 
-### 90. Simplify your types with `ComponentType`
+### 90\. Simplify your types with `ComponentType`
 
 Let's say you're designing an app like Figma (I know, you're ambitious 😅).
 
@@ -2887,13 +3044,17 @@ const WidgetWrapper = ({ widget }: { widget: Widget }) => {
   );
 };
 ```
+
 ---
 
-### 91. Make your code more reusable with TypeScript generics
+### 91\. Make your code more reusable with TypeScript generics
 
 If you're not using TypeScript generics, only two things could be happening:
-- You are either writing very simple code or,
-- You are missing out 😅
+
+* You are either writing very simple code or,
+    
+* You are missing out 😅
+    
 
 TypeScript generics make your code more reusable and flexible.
 
@@ -2914,7 +3075,6 @@ export interface User {
 export interface Follower extends User {
   followingDate: Date;
 }
-
 ```
 
 Each list should be sortable.
@@ -2924,10 +3084,15 @@ There is a bad and a good way to do this.
 **❌ Bad:** I create a single list component that accepts a union of items.
 
 This is bad because:
-- Every time a new item is added, the functions/types must be updated.
-- The function is not entirely type-safe (see `This shouldn't happen` comment).
-- This code depends on other files (e.g.: `FollowerItem`, `PostItem`).
-- Etc.
+
+* Every time a new item is added, the functions/types must be updated.
+    
+* The function is not entirely type-safe (see `This shouldn't happen` comment).
+    
+* This code depends on other files (e.g.: `FollowerItem`, `PostItem`).
+    
+* Etc.
+    
 
 ```jsx
 import { FollowerItem } from "./FollowerItem";
@@ -2995,6 +3160,7 @@ function renderItem(item: ListItem) {
   }
 }
 ```
+
 **Instead, we can use TypeScript generics to create a more reusable and type-safe list component.**
 
 I made an example in the sandbox below 👇.
@@ -3003,7 +3169,8 @@ I made an example in the sandbox below 👇.
 
 ---
 
-### 92. Ensure precise typing with the `NoInfer` utility type
+### 92\. Ensure precise typing with the `NoInfer` utility type
+
 Imagine you're developing a video game 🎮.
 
 The game has multiple locations (e.g., `LeynTir`, `Forin`, `Karin`, etc.).
@@ -3042,7 +3209,6 @@ function teleportPlayer<L extends string>(
 ) : NoInfer<L> {
   // Teleport the player and return the location
 }
-
 ```
 
 Now TypeScript will throw an error:
@@ -3055,7 +3221,8 @@ Using the `NoInfer` utility type ensures that the default location must be one o
 
 ---
 
-### 93. Effortlessly type refs with the `ElementRef` type helper
+### 93\. Effortlessly type refs with the `ElementRef` type helper
+
 There is a hard and easy way to type refs.
 
 The hard way is to remember the element's type name and use it directly 🤣.
@@ -3076,7 +3243,8 @@ const ref = useRef<ElementRef<"div">>(null);
 
 ---
 
-### 94. Boost your code's quality and safety with `eslint-plugin-react` and Prettier.
+### 94\. Boost your code's quality and safety with `eslint-plugin-react` and Prettier.
+
 You can't be serious about React if you're not using [eslint-plugin-react](https://www.npmjs.com/package/eslint-plugin-react)😅.
 
 It helps you catch potential bugs and enforce best practices.
@@ -3087,14 +3255,16 @@ You can also use [Prettier](https://prettier.io/) to format your code automatica
 
 ---
 
-### 95. Log and monitor your app with tools like Sentry or Grafana Cloud Frontend Observability.
+### 95\. Log and monitor your app with tools like Sentry or Grafana Cloud Frontend Observability.
+
 You can't improve what you don't measure 📏.
 
 If you're looking for a monitoring tool for your production apps, check out [Sentry](https://sentry.io/) or [Grafana Cloud Frontend Observability](https://grafana.com/products/cloud/frontend-observability-for-real-user-monitoring/).
 
 ---
 
-### 96. Start coding quickly with online IDEs like **Code Sandbox** or **Stackblitz**
+### 96\. Start coding quickly with online IDEs like **Code Sandbox** or **Stackblitz**
+
 Local development environments can be a pain to set up.
 
 Especially as a beginner 🐣.
@@ -3105,46 +3275,67 @@ These tools allow you to start coding quickly without worrying about setting up 
 
 ---
 
-### 97. Looking for advanced react skills? Check out these books 👇
+### 97\. Looking for advanced react skills? Check out these books 👇
+
 If you're looking for advanced React books 📚, I would recommend:
-- [Advanced React](https://www.advanced-react.com/) by @adevnadia
-- [Fluent React](https://www.oreilly.com/library/view/fluent-react/9781098138707/) by [@TejasKumar_](https://x.com/TejasKumar_)
-- [Building Large Scale Web Apps](https://largeapps.dev/) by [@addyosmani](https://x.com/addyosmani) and [@djirdehh](https://x.com/djirdehh)
+
+* [Advanced React](https://www.advanced-react.com/) by @adevnadia
+    
+* [Fluent React](https://www.oreilly.com/library/view/fluent-react/9781098138707/) by [@TejasKumar\_](https://x.com/TejasKumar_)
+    
+* [Building Large Scale Web Apps](https://largeapps.dev/) by [@addyosmani](https://x.com/addyosmani) and [@djirdehh](https://x.com/djirdehh)
+    
 
 ---
 
-### 98. Prepping React interviews? Check reactjs-interview-questions
+### 98\. Prepping React interviews? Check reactjs-interview-questions
+
 React interviews ⚛️ can be tricky.
 
 Luckily, you can prep for them by checking [this repo](https://github.com/sudheerj/reactjs-interview-questions).
 
 ---
 
-### 99. Learn React best practices from experts like Nadia, Dan, Josh, Kent, etc.
+### 99\. Learn React best practices from experts like Nadia, Dan, Josh, Kent, etc.
+
 If you want to stay up-to-date with the best practices and learn tips, make sure to follow experts like:
-- @adevnadia: https://x.com/adevnadia for advanced react tips
-- @joshwcomeau: https://x.com/joshwcomeau
-- @kentcdodds: https://x.com/kentcdodds
-- @mattpocockuk: https://x.com/mattpocockuk for TypeScript tips
-- @TejasKumar_: https://x.com/TejasKumar_
-- @housecor: https://x.com/housecor
-- or me 😅: https://x.com/_ndeyefatoudiop
+
+* @adevnadia: https://x.com/adevnadia for advanced react tips
+    
+* @joshwcomeau: https://x.com/joshwcomeau
+    
+* @kentcdodds: https://x.com/kentcdodds
+    
+* @mattpocockuk: https://x.com/mattpocockuk for TypeScript tips
+    
+* @TejasKumar\_: https://x.com/TejasKumar\_
+    
+* @housecor: https://x.com/housecor
+    
+* or me 😅: https://x.com/\_ndeyefatoudiop
+    
 
 ---
 
-### 100. Stay updated with the React ecosystem by subscribing to newsletters like This Week In React or ui.dev
+### 100\. Stay updated with the React ecosystem by subscribing to newsletters like This Week In React or ui.dev
+
 React is a fast-moving ecosystem.
 
 There are many tools, libraries, and best practices to keep up with.
 
 To stay updated, make sure to subscribe to newsletters 💌 like:
-- [This Week In React](https://thisweekinreact.com/) by @sebastienlorber
-- [ui.dev](https://bytes.dev/)
-- Etc.
+
+* [This Week In React](https://thisweekinreact.com/) by @sebastienlorber
+    
+* [ui.dev](https://bytes.dev/)
+    
+* Etc.
+    
 
 ---
 
-### 101. Engage with the React community on platforms like r/reactjs
+### 101\. Engage with the React community on platforms like r/reactjs
+
 The React community is fantastic.
 
 You can learn a lot from other developers and share your knowledge.
@@ -3159,6 +3350,6 @@ Leave a comment 📩 to share your favorite tip (or add one).
 
 And don't forget to drop a "💖🦄🔥".
 
-If you like articles like this, join my **FREE** newsletter, **[FrontendJoy](https://frontendjoy.substack.com/)**.
+If you like articles like this, join my **FREE** newsletter, [**FrontendJoy**](https://frontendjoy.substack.com/).
 
 If you want daily tips, find me on [X/Twitter](https://twitter.com/_ndeyefatoudiop).
