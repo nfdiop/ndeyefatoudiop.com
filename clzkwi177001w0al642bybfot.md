@@ -23,9 +23,6 @@ Ready? Let's dive in 💪!
 
 ---
 
-
----
-
 ##  Category #1: Components organization 🧹
 
 ---
