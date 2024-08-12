@@ -260,28 +260,39 @@ export function ListWrapper({ items, selectedItem, setSelectedItem }) {
 
 ---
 
-### 8\. Use IIFE (Immediately Invoked Function Expression) to keep your code clean and avoid lingering variables
+### 8\. Use functions (inline or not) to avoid polluting your scope with intermediate variables
 
 ❌ **Bad**: The variables `gradeSum` and `gradeCount` are cluttering the component's scope.
 
 ```jsx
-function Grade() {
+function Grade({ grades }) {
+  if (grades.length === 0) {
+    return <>No grades available.</>;
+  }
+
   let gradeSum = 0;
   let gradeCount = 0;
+
   grades.forEach((grade) => {
     gradeCount++;
     gradeSum += grade;
   });
+
   const averageGrade = gradeSum / gradeCount;
-  return <>{averageGrade}</>;
+
+  return <>Average Grade: {averageGrade}</>;
 }
 ```
 
 ✅ **Good**: The variables `gradeSum` and `gradeCount`are scoped within the IIFE.
 
 ```jsx
-function Grade() {
-  const averageGrade = (() => {
+function Grade({ grades }) {
+  if (grades.length === 0) {
+    return <>No grades available.</>;
+  }
+
+  const computeAverageGrade = () => {
     let gradeSum = 0;
     let gradeCount = 0;
     grades.forEach((grade) => {
@@ -289,10 +300,10 @@ function Grade() {
       gradeSum += grade;
     });
     return gradeSum / gradeCount;
-  })();
-  return <>{averageGrade}</>;
-}
-```
+  };
+
+  return <>Average Grade: {computeAverageGrade()}</>;
+}```
 
 > 💡 Note: you can also define a function `computeAverageGrade` outside the component and call it inside it.
 
@@ -2539,8 +2550,10 @@ function Form() {
   return (
     <div className="App">
       <div>
-        <label htmlFor={id}>Name</label>
-        <input type="text" id={id} aria-describedby={id} />
+        <label>
+          Name{" "}
+          <input type="text" aria-describedby={id} />
+        </label>
       </div>
       <span id={id}>Make sure to include full name</span>
     </div>
